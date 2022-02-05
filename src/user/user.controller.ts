@@ -6,7 +6,7 @@ import { CreateNewUserDTO } from './dtos/user.dto';
 import { UsersService } from './user.service';
 
 @ApiTags('Users')
-//@Auth()
+@Auth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
