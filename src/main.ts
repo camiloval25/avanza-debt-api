@@ -4,9 +4,10 @@ import { AppModule } from './app.module';
 import { startSwagger } from './app.swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
+  logger.log(`Trying to connect to host: ${process.env.DB_HOST}`);
 
+  const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.enableCors();
 
