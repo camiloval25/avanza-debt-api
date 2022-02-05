@@ -30,9 +30,6 @@ import { PdfsModule } from './pdfs/pdfs.module';
       database: process.env.DB_NAME,
       extra: {
         decimalNumbers: true,
-        trustServerCertificate: true,
-        Encrypt: true,
-        IntegratedSecurity: false,
       },
       entities: [],
       bigNumberStrings: false,
