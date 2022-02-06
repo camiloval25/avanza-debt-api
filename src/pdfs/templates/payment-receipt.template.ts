@@ -9,7 +9,7 @@ import {
   scheduleTypeToString,
 } from 'src/common/utils';
 
-export const paymentReceiptHtml = (receipt) => {
+export const paymentReceiptHtml = (receipt: any) => {
   const paymentDateFormated = moment(receipt.paymentCreatedAt).format('LL');
   const scheduleTypeFormated = scheduleTypeToString(receipt.scheduleType);
   const documentTypeFormated = documentTypeToString(
