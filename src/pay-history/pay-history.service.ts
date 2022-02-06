@@ -27,7 +27,7 @@ export class PayHistoryService {
   async getStudentPaymentReceipt(paymentHistoryId: string) {
     const receipt = await this.payHistoryRepository
       .createQueryBuilder('pay-histories')
-      .select('pay-histories.id', 'paymentId')
+      .select('pay-histories.id', 'paymentHistoryId')
       .addSelect('pay-histories.createdAt', 'paymentCreatedAt')
       .addSelect('pay-histories.amount', 'payHistoryAmount')
       .addSelect('pay-histories.remaining', 'remainingDebt')
