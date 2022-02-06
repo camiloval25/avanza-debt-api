@@ -11,7 +11,7 @@ export class PdfsService {
       pdf
         .create(html, { orientation: 'portrait', format: 'Letter' })
         .toBuffer((error, buffer) => {
-          if (error) return console.log(error);
+          if (error) return error;
           res(buffer);
         });
     });
