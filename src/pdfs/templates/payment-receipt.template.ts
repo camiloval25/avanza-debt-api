@@ -11,7 +11,7 @@ import {
 
 export const paymentReceiptHtml = (receipt) => {
   const {
-    paymentHistoryId,
+    paymentId,
     payHistoryAmount,
     paymentCreatedAt,
     studentFirstName,
@@ -39,7 +39,7 @@ export const paymentReceiptHtml = (receipt) => {
     }),
   );
 
-  const paymentIdIndicator = getLastCharsOfId(paymentHistoryId);
+  const paymentIdIndicator = getLastCharsOfId(paymentId);
 
   const paymentReceipt = `<style type="text/css">
   .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
