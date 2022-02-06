@@ -52,7 +52,7 @@ export class PayHistoryService {
       .getRawOne();
 
     const receiptPdf = await this.pdfService.generatePaymentReceiptPDF(receipt);
-    console.log('receipt PDF', receipt);
+    console.log('receipt PDF', receiptPdf);
     return receiptPdf;
   }
 
