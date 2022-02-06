@@ -83,13 +83,13 @@ export const paymentReceiptHtml = (receipt) => {
       <td class="tg-c3ow" colspan="5"><span style="font-weight:bold">DATOS PERSONALES</span></td>
     </tr>
     <tr>
-      <td class="tg-c3ow" colspan="2"><span style="font-weight: bold;">Apellidos:</span><br>${studentLastName}</td>
-      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">Nombres:</span><br>${studentFirstName}</td>
+      <td class="tg-c3ow" colspan="2"><span style="font-weight: bold;">Apellidos:</span><br>${studentLastName.toUpperCase()}</td>
+      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">Nombres:</span><br>${studentFirstName.toUpperCase()}</td>
     </tr>
     <tr>
       <td class="tg-c3ow"><span style="font-weight:bold">Tipo de Documento:</span><br>${documentTypeFormated}</td>
       <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">No. Documento:</span><br>${studentIdentification}</td>
-      <td class="tg-c3ow"><span style="font-weight: bold;">Celular</span><br>${studentContactPhone}</td>
+      <td class="tg-c3ow"><span style="font-weight: bold;">Celular:</span><br>${studentContactPhone}</td>
     </tr>
     <tr>
       <td class="tg-c3ow" colspan="5"><span style="font-weight:bold">REGISTRO DE PAGO</span></td>
