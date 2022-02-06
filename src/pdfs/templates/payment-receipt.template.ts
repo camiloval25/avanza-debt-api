@@ -9,25 +9,37 @@ import {
   scheduleTypeToString,
 } from 'src/common/utils';
 
-export const paymentReceiptHtml = (receipt: any) => {
-  const paymentDateFormated = moment(receipt.paymentCreatedAt).format('LL');
-  const scheduleTypeFormated = scheduleTypeToString(receipt.scheduleType);
-  const documentTypeFormated = documentTypeToString(
-    receipt.studentDocumentType,
-  );
-  const coursePriceFormated = formatNumberToCurrency(receipt.coursePrice);
-  const payHistoryAmountFormated = formatNumberToCurrency(
-    receipt.payHistoryAmount,
-  );
-  const debtRemainingFormated = formatNumberToCurrency(receipt.remainingDebt);
+export const paymentReceiptHtml = (receipt) => {
+  const {
+    paymentHistoryId,
+    payHistoryAmount,
+    paymentCreatedAt,
+    studentFirstName,
+    studentLastName,
+    studentDocumentType,
+    studentIdentification,
+    studentContactPhone,
+    scheduleName,
+    scheduleType,
+    courseName,
+    coursePrice,
+    remainingDebt,
+  } = receipt;
+
+  const paymentDateFormated = moment(paymentCreatedAt).format('LL');
+  const scheduleTypeFormated = scheduleTypeToString(scheduleType);
+  const documentTypeFormated = documentTypeToString(studentDocumentType);
+  const coursePriceFormated = formatNumberToCurrency(coursePrice);
+  const payHistoryAmountFormated = formatNumberToCurrency(payHistoryAmount);
+  const debtRemainingFormated = formatNumberToCurrency(remainingDebt);
 
   const payAmountInLetters = capitalizeFirstLetter(
-    writtenNumber(receipt.payHistoryAmount, {
+    writtenNumber(payHistoryAmount, {
       lang: 'es',
     }),
   );
 
-  const paymentIdIndicator = getLastCharsOfId(receipt.paymentHistoryId);
+  const paymentIdIndicator = getLastCharsOfId(paymentHistoryId);
 
   const paymentReceipt = `<style type="text/css">
   .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
@@ -54,21 +66,21 @@ export const paymentReceiptHtml = (receipt: any) => {
   <tbody>
     <tr>
       <td class="tg-c3ow"><span style="font-weight:bold">Fecha de Pago:</span><br>${paymentDateFormated}</td>
-      <td class="tg-c3ow" colspan="2">Curso y/o seminario a matricular:<br><span style="font-weight:bold">${receipt.courseName}</span></td>
+      <td class="tg-c3ow" colspan="2">Curso y/o seminario a matricular:<br><span style="font-weight:bold">${courseName}</span></td>
       <td class="tg-c3ow">Jornada:<br>${scheduleTypeFormated}</td>
-      <td class="tg-c3ow">Horario:<br>${receipt.scheduleName}</td>
+      <td class="tg-c3ow">Horario:<br>${scheduleName}</td>
     </tr>
     <tr>
       <td class="tg-c3ow" colspan="5"><span style="font-weight:bold">DATOS PERSONALES</span></td>
     </tr>
     <tr>
-      <td class="tg-c3ow" colspan="2">Apellidos:<br>${receipt.studentLastName}</td>
-      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">Nombres:</span><br>${receipt.studentFirstName}</td>
+      <td class="tg-c3ow" colspan="2">Apellidos:<br>${studentLastName}</td>
+      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">Nombres:</span><br>${studentFirstName}</td>
     </tr>
     <tr>
       <td class="tg-c3ow"><span style="font-weight:bold">Tipo de Documento:</span><br>${documentTypeFormated}</td>
-      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">No. Documento:</span><br>${receipt.studentIdentification}</td>
-      <td class="tg-c3ow">Celular<br>${receipt.studentContactPhone}</td>
+      <td class="tg-c3ow" colspan="3"><span style="font-weight:bold">No. Documento:</span><br>${studentIdentification}</td>
+      <td class="tg-c3ow">Celular<br>${studentContactPhone}</td>
     </tr>
     <tr>
       <td class="tg-c3ow" colspan="5"><span style="font-weight:bold">REGISTRO DE PAGO</span></td>

@@ -28,7 +28,6 @@ export class PayHistoryController {
   }
 
   @Get('/student-receipt/:paymentHistoryId')
-  @Header('Content-Type', 'application/pdf')
   async getStudentReceipt(
     @Param('paymentHistoryId') paymentHistoryId: string,
     @Res() res: Response,
