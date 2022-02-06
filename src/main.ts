@@ -12,7 +12,7 @@ async function bootstrap() {
   app.enableCors();
 
   startSwagger(app);
-  await app.listen(443);
+  await app.listen(process.env.PORT || 3000);
   logger.log(`Server running - Port: ${await app.getUrl()}`);
 }
 bootstrap();
