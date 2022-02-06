@@ -11,6 +11,10 @@ export class GroupService {
   constructor(
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
+
+    @InjectRepository(GroupStudent)
+    private readonly groupStudentRepository: Repository<GroupStudent>,
+
     private readonly courseService: CourseService,
   ) {}
 
@@ -24,17 +28,19 @@ export class GroupService {
   }
 
   async getGroupsAvailableByStudentId(studentId: string) {
+    const groupQuery = await this.groupStudentRepository
+      .createQueryBuilder('groups-students')
+      .select('groups-students.group', 'id')
+      .where('groups-students.studentId = :studentId', { studentId })
+      .getSql();
+
+    const queryFormatted = groupQuery.replace('?', `'${studentId}'`);
     const availableGroups = await this.groupRepository
       .createQueryBuilder('groups')
       .select('groups.id', 'id')
       .addSelect('CONCAT(courses.name, " / ", groups.name)', 'name')
       .innerJoin('groups.course', 'courses')
-      .leftJoin(
-        'groups-students',
-        'groups-students',
-        'groups.id <> groups-students.groupId',
-      )
-      .where('groups-students.studentId = :studentId', { studentId })
+      .where(`groups.id NOT IN (${queryFormatted})`)
       .getRawMany();
 
     return availableGroups;
