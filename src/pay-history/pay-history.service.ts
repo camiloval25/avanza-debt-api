@@ -30,15 +30,17 @@ export class PayHistoryService {
       .select('pay-histories.id', 'paymentHistoryId')
       .addSelect('pay-histories.createdAt', 'paymentCreatedAt')
       .addSelect('pay-histories.amount', 'payHistoryAmount')
+      .addSelect('pay-histories.remaining', 'remainingDebt')
       .addSelect('students.firstName', 'studentFirstName')
       .addSelect('students.lastName', 'studentLastName')
       .addSelect('students.documentType', 'studentDocumentType')
       .addSelect('students.identification', 'studentIdentification')
       .addSelect('students.contactPhone', 'studentContactPhone')
       .addSelect('schedules.name', 'scheduleName')
+      .addSelect('schedules.scheduleType', 'scheduleType')
       .addSelect('courses.name', 'courseName')
       .addSelect('courses.price', 'coursePrice')
-      .addSelect('courses.price - pay-histories.amount', 'remainingDebt')
+      .addSelect('groups-students.id', 'groupStudentId')
       .innerJoin('pay-histories.groupStudent', 'groups-students')
       .innerJoin('groups-students.student', 'students')
       .innerJoin('groups-students.group', 'groups')
@@ -48,8 +50,6 @@ export class PayHistoryService {
         paymentHistoryId,
       })
       .getRawOne();
-
-    console.log(receipt);
 
     const receiptPdf = await this.pdfService.generatePaymentReceiptPDF(receipt);
     return receiptPdf;
@@ -61,14 +61,15 @@ export class PayHistoryService {
       .select('pay-histories.id', 'id')
       .addSelect('pay-histories.createdAt', 'payDate')
       .addSelect('pay-histories.amount', 'amountPayed')
+      .addSelect('pay-histories.remaining', 'remainingDebt')
       .addSelect('courses.name', 'courseName')
       .addSelect('courses.price', 'coursePrice')
-      .addSelect('courses.price - pay-histories.amount', 'remainingDebt')
       .innerJoin('pay-histories.groupStudent', 'groups-students')
       .innerJoin('groups-students.student', 'students')
       .innerJoin('groups-students.group', 'groups')
       .innerJoin('groups.course', 'courses')
       .where('students.id = :studentId', { studentId })
+      .orderBy('pay-histories.createdAt', 'DESC')
       .getRawMany();
 
     return studentHistory;
@@ -79,6 +80,7 @@ export class PayHistoryService {
       .createQueryBuilder('pay-histories')
       .select('pay-histories.id', 'id')
       .addSelect('pay-histories.nextDueDate', 'nextDueDate')
+      .addSelect('students.id', 'studentId')
       .addSelect('students.firstName', 'firstName')
       .addSelect('students.lastName', 'lastName')
       .addSelect('students.documentType', 'documentType')
@@ -149,6 +151,7 @@ export class PayHistoryService {
           const addStudentPay = this.payHistoryRepository.create({
             ...payInformation,
             payRegisteredBy: user.id,
+            remaining: coursePrice - studentTotalPay,
           });
 
           const payRegistered = await transactionManager.save(

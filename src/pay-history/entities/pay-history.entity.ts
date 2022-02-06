@@ -28,6 +28,15 @@ export class PayHistory {
   })
   amount: number;
 
+  @Column({
+    type: 'decimal',
+    precision: 12,
+    scale: 2,
+    nullable: false,
+    transformer: new ColumnNumericTransformer(),
+  })
+  remaining: number;
+
   @Column({ type: 'date', nullable: false })
   nextDueDate: Date;
 

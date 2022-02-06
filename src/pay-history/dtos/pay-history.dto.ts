@@ -18,6 +18,11 @@ export class PayHistoryDTO {
   @IsPositive()
   amount: number;
 
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  remaining: number;
+
   @IsDateString()
   @IsNotEmpty()
   nextDueDate: Date;

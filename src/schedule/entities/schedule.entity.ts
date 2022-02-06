@@ -1,3 +1,4 @@
+import { ScheduleTypeEnum } from 'src/common/enums/schedule-type.enum';
 import {
   Column,
   CreateDateColumn,
@@ -14,6 +15,14 @@ export class Schedule {
   @Index()
   @Column({ type: 'varchar', length: 50 })
   name: string;
+
+  @Column({
+    type: 'enum',
+    enum: ScheduleTypeEnum,
+    nullable: false,
+    default: ScheduleTypeEnum.WEEK,
+  })
+  scheduleType: ScheduleTypeEnum;
 
   @Column({ type: 'time' })
   startTime: string;
