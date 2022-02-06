@@ -10,7 +10,8 @@ export class PdfsService {
     return new Promise((res) => {
       pdf
         .create(html, { orientation: 'portrait', format: 'Letter' })
-        .toBuffer((_, buffer) => {
+        .toBuffer((error, buffer) => {
+          if (error) return console.log(error);
           res(buffer);
         });
     });
