@@ -36,6 +36,7 @@ export class PayHistoryController {
       paymentHistoryId,
     );
 
+    console.log(pdfReceipt);
     res.end(pdfReceipt);
   }
 
