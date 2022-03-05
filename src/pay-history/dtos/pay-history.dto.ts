@@ -23,9 +23,8 @@ export class PayHistoryDTO {
   @IsOptional()
   remaining: number;
 
-  @IsDateString()
-  @IsNotEmpty()
-  nextDueDate: Date;
+  @IsString()
+  nextDueDate: string;
 
   @IsString()
   @IsNotEmpty()

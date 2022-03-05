@@ -11,6 +11,10 @@ export class GroupDTO {
 
   @IsString()
   @IsNotEmpty()
+  startDate: string;
+
+  @IsString()
+  @IsNotEmpty()
   course: string;
 
   @IsString()

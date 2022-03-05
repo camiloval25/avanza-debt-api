@@ -19,6 +19,9 @@ export class Group {
   @Column({ type: 'varchar', length: 100 })
   name: string;
 
+  @Column({ type: 'date' })
+  startDate: string;
+
   @ManyToOne(() => Course, (course) => course.groups, {
     onDelete: 'CASCADE',
     nullable: false,
